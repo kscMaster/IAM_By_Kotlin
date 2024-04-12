@@ -1,0 +1,59 @@
+spring:
+  cloud:
+    kubernetes:
+      reload:
+        enabled: false
+        monitoring-config-maps: false
+        monitoring-secrets: false
+        strategy: restart_context
+        mode: event
+      config:
+        enabled: true
+        namespace: mp
+        name: mp-tenant-admin-api
+management:
+  endpoint:
+    restart:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: restart
+#management:
+#  endpoints:
+#    endpoint:
+#      restart:
+#        enabled: true
+#  endpoint:
+#    web:
+#      exposure:
+#        include: "*"
+---
+spring:
+  config:
+    activate:
+      on-profile: dev,test,demo,main
+  cloud:
+    kubernetes:
+      client:
+        master-url: https://kubernetes.default.svc
+        namespace: default
+        oauthToken: eyJhbGciOiJSUzI1NiIsImtpZCI6IkduWDI2cTRVdUtkeUFQbTI3YTIwcUZzRVhoamxtNTJ4eDM4b0hkS3RJVmsifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJvYXJkLXVzZXItdG9rZW4tbnM5Z3giLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoia3Vib2FyZC11c2VyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiMWVmNzA4MTMtODcwNy00OTg2LTk4NTMtMWE5NGQ1NjNkOTNlIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmt1Ym9hcmQtdXNlciJ9.iC2uobqY7B0UA8kSf5oCtGp7Q7fITQBHb83Z2VJu3xlzokkNOCZH9NwVBoFLye61vjMAvNk496Kdda0vuMqF3F24Drn1tIWK3lqosIw__VKV_RE3MNIpcv6rHTDkyTP4xVnQKC1Mn5Qe9f8VKGOHa40nxc9qKuKztiAPP3KQshYTwS9K8l8swQS6YnRc4A6YZIWoXKBoXi3oBnPFP-qZ5HT7uubQCnhUTSv8V9dsLusN4nmhBneS13AEuld1w8pAWvQ33mDh9A6JhioJKnWMw_HYAhul0fAAmIskZqI09Lo2V8h8nmFmoCfmYTzuDSWTxfwi2zoI29-NWxNFH6V7KA
+        trustCerts: true
+  main:
+    allow-bean-definition-overriding: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  cloud:
+    kubernetes:
+      client:
+        master-url: https://kubernetes.default.svc:6443
+        namespace: default
+        oauthToken: eyJhbGciOiJSUzI1NiIsImtpZCI6IkZjalVmUFlyeF9ZSmNFaHJ6NUdJclNBdERCdWloNkE4SUV0MWRXS19YTGcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJrdWJvYXJkLXVzZXItdG9rZW4ta2xwbTgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoia3Vib2FyZC11c2VyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiODk1Njk5MGQtYjgwNC00ODFmLTg4YWMtNWM0MDMyMzBhNjJlIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmt1Ym9hcmQtdXNlciJ9.UMaOkWBk7aUp1ahZl316xIY_GwRw22uEFUIo9yMpE92vFlL1voHlq7vxb6s6zhPjeFON8y8658U3qam4UQqkDfIT5UYWzryWwB6V0IrZzunzoX0WZWB2-BMX3qSnAxmPSaaqbi_WTb1S4R54oNzZaOWkYsinYr4h1tyXYZR737yNY4ZV9mgs72zY52wkOJA8zskmWMAwm9Z8aZiDBN3p-Sx_PKAUBmjYJn5yZlOfWtWSabVqbpS2lrrVpnYXeAWvRs34e7tI1eM3Yq5sRPtiUNvvvGTT_CVC4P7Pui9sMcK1TMWFLb2wM6T05UHXlkB2CjjVzTDRi_PUyc3G9yon3g
+        trustCerts: true
+  main:
+    allow-bean-definition-overriding: true

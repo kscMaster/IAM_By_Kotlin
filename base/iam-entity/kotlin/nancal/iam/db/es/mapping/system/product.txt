@@ -1,0 +1,116 @@
+{
+  "properties" : {
+    "name" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "tenant" : {
+      "properties" : {
+        "id" : {
+          "type" : "keyword"
+        },
+        "name" : {
+          "type" : "keyword"
+        }
+      }
+    },
+    "slogan" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "brandPath" : {
+      "properties" : {
+        "id" : {
+          "type" : "keyword"
+        },
+        "code" : {
+          "type" : "keyword"
+        },
+        "name" : {
+          "type" : "keyword"
+        }
+      }
+    },
+    "corpCategoryPath" : {
+      "properties" : {
+        "id" : {
+          "type" : "keyword"
+        },
+        "code" : {
+          "type" : "keyword"
+        },
+        "name" : {
+          "type" : "keyword"
+        }
+      }
+    },
+    "categoryPath" : {
+      "properties" : {
+        "id" : {
+          "type" : "keyword"
+        },
+        "code" : {
+          "type" : "keyword"
+        },
+        "name" : {
+          "type" : "keyword"
+        }
+      }
+    },
+    "detail" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "remark" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "status" : {
+      "type" : "keyword"
+    },
+    "guidePrice" : {
+      "type" : "integer"
+    },
+    "skuDefines" : {
+      "properties" : {
+        "key" : {
+          "type" : "text",
+          "index" : "true",
+          "boost" : "1",
+          "analyzer" : "ik_max_word",
+          "search_analyzer" : "ik_max_word"
+        },
+        "value" : {
+          "type" : "text",
+          "index" : "true",
+          "boost" : "1",
+          "analyzer" : "ik_max_word",
+          "search_analyzer" : "ik_max_word"
+        }
+      }
+    },
+    "id" : {
+      "type" : "keyword"
+    },
+    "createAt" : {
+      "type" : "date",
+      "format" : "strict_date_optional_time||yyyy-MM-dd HH:mm:ss||epoch_second"
+    },
+    "updateAt" : {
+      "type" : "date",
+      "format" : "strict_date_optional_time||yyyy-MM-dd HH:mm:ss||epoch_second"
+    }
+  }
+}

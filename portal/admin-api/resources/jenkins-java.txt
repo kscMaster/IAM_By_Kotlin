@@ -1,0 +1,114 @@
+pipeline {
+    agent any
+    environment {
+        folder = "@folder@"
+    }
+    stages {
+        stage('拉取代码') {
+            steps {
+                sh '''#!/usr/bin/env bash
+                echo -e "generate at @date@ by @auth@ \ngit:@git_url@ @git_branch@ @folder@\nk8s:@k8s_ns@"
+                sudo chmod a+rw ./ -R
+                '''
+                deleteDir()
+                git branch: '@git_branch@', credentialsId: '@git_credential_id@', url: '@git_url@'
+            }
+        }
+        stage('编译') {
+            steps {
+                sh '''#!/usr/bin/env bash
+                pod_id=$(date "+%Y%m%d.%H%M%S")
+                echo $pod_id > .pod_id.txt
+                . /etc/profile
+
+                if [ -f @folder@/pre_build.sh ]; then
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/pre_build.sh"
+                    echo "===================================="
+                    bash @folder@/pre_build.sh @nacos_ns@
+                fi
+
+                if [ -f @folder@/build.sh ]; then
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/build.sh"
+                    echo "===================================="
+                    bash @folder@/build.sh @nacos_ns@
+                else
+                    mvn clean package -Dmaven.test.skip=true
+                fi
+
+                if [ -f @folder@/post_build.sh ]; then
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/post_build.sh"
+                    echo "===================================="
+                    bash @folder@/post_build.sh @nacos_ns@
+                fi
+                '''
+            }
+        }
+        stage('生成镜像') {
+            steps {
+                sh'''#!/usr/bin/env bash
+                read pod_id < .pod_id.txt
+                if [ ! -f @folder@/Dockerfile ]; then
+                    wget http://saas-demo.nancal.com:8200/app/java.Dockerfile -O @folder@/Dockerfile
+                else
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/Dockerfile"
+                    echo "===================================="
+                fi
+                docker_name=$(get-pom-value.py --path @folder@ --type artifactId)
+                docker_name=$(echo $docker_name | sed 's/\\W/-/g' |  sed 's/_/-/g')
+
+                echo "===================================="
+                echo "使用 @folder@/pom.xml artifactId = $docker_name 做为 docker image_name 以及 k8s svc-name"
+                echo "===================================="
+                sudo mkdir -p @folder@/target/lib
+
+                cp -a /data/agent @folder@/
+
+                sudo docker build -f @folder@/Dockerfile -t images.nancal.com:8000/java/$docker_name:$pod_id $folder
+                '''
+            }
+        }
+        stage('上传镜像') {
+            steps {
+                sh'''#!/usr/bin/env bash
+                read pod_id < .pod_id.txt
+                docker_name=$(get-pom-value.py --path @folder@ --type artifactId)
+                docker_name=$(echo $docker_name | sed 's/\\W/-/g' |  sed 's/_/-/g')
+
+                sudo docker push images.nancal.com:8000/java/$docker_name:$pod_id
+                '''
+            }
+        }
+        stage('K8s部署') {
+            steps {
+                sh '''#!/usr/bin/env bash
+                . /etc/profile
+                read pod_id < .pod_id.txt
+                jar_name=$(get-pom-value.py --path @folder@)
+                docker_name=$(get-pom-value.py --path @folder@ --type artifactId)
+                docker_name=$(echo $docker_name | sed 's/\\W/-/g' |  sed 's/_/-/g')
+
+                if [ ! -f @folder@/app.yml ]; then
+                    wget http://saas-demo.nancal.com:8200/app/java-default.yml -O @folder@/app.yml
+                else
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/app.yml"
+                    echo "===================================="
+                fi
+                sed -i "s|@name|$docker_name|g" @folder@/app.yml
+                sed -i "s|@image|images.nancal.com:8000/java/$docker_name:$pod_id|g" @folder@/app.yml
+                sed -i "s|@k8s_ns|@k8s_ns@|g" @folder@/app.yml
+                sed -i "s|@nacos_ns|@nacos_ns@|g" @folder@/app.yml
+                sed -i "s|@version|$pod_id|g" @folder@/app.yml
+                sed -i "s|@jar_name|$jar_name|g" @folder@/app.yml
+                kubectl apply -f @folder@/app.yml -n @k8s_ns@
+
+                echo "部署 $docker_name 完成"
+                '''
+            }
+        }
+    }
+}

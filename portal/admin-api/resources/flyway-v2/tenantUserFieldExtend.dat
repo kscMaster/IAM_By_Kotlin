@@ -1,0 +1,7 @@
+{"isDeleted":false,"id":"62c686767713cb1e6a16bd03","tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"code":"Elesignatures","name":"电子签名","fieldType":"Text","remark":"","dataSource":""}
+{"isDeleted":false,"id":"62b9a12500f659653a5dae54","tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"code":"postalAddress","name":"通讯地址","fieldType":"Text","remark":"通讯地址","dataSource":""}
+{"isDeleted":false,"id":"62b9a12500f659653a5dae53","tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"code":"station","name":"工位","fieldType":"Text","remark":"工位","dataSource":""}
+{"isDeleted":false,"id":"62b9a12500f659653a5dae52","tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"code":"phone","name":"电话","fieldType":"Text","remark":"电话","dataSource":""}
+{"isDeleted":false,"id":"62b9a12500f659653a5dae51","tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"code":"birthday","name":"生日","fieldType":"Text","remark":"生日","dataSource":""}
+{"isDeleted":false,"id":"62b9a12500f659653a5dae50","tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"code":"gender","name":"性别","fieldType":"Text","remark":"性别","dataSource":""}
+{"isDeleted":false,"id":"62b2cb6271fec83d9a25993b","tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"code":"userid","name":"身份证","fieldType":"Text","remark":"","dataSource":""}

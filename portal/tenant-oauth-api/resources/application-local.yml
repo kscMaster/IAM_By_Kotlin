@@ -1,0 +1,92 @@
+app:
+  list-result-with-count: true
+  scheduler: false
+  user-system: oauth
+  default-password: 1234
+  product-line:
+    code: mp
+  filter:
+    allow-origins: nancal.com
+    ignore-log-urls: /health,/open/log,/log,/favicon.ico,/index.html,/webjars/,/swagger-resources/,/v2/api-docs,/swagger-ui.html
+  mongo:
+    admin:
+      ds:
+        uri: mongodb://root:1234.5678@mongo:27017/admin
+      tables:
+        - system.users
+  mongo-var-uri: mongodb://iam:mp-iam-2021@mongo:27017/iam-@tenantId@
+
+logging:
+  config: classpath:logback-spring.xml
+  file:
+    path: logs
+  level:
+    root: warn
+    com:
+      mongodb: TRACE
+    org:
+      springframework:
+        data:
+          mongodb: WARN
+        security: WARN
+    nbcp:
+      base:
+        filter: INFO
+      db:
+        mongo: INFO
+        redis: INFO
+        mysql: INFO
+
+server:
+  port: 8003
+  http2:
+    enabled: true
+  servlet:
+    session:
+      cookie:
+        http-only: false
+        max-age: P3D  #3天
+  forward-headers-strategy: native
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  aop:
+    auto: true
+  data:
+    mongodb:
+      uri: mongodb://iam:mp-iam-2021@mongo:27017/iam
+  redis:
+    host: redis
+    password: 1@#4
+    port: 6379
+    timeout: 3000
+  rabbitmq:
+    addresses: rabbitmq:5672
+    password: dev
+    username: dev
+    virtual-host: /
+  elasticsearch:
+    rest:
+      uris: http://es:9200
+  servlet:
+    multipart:
+      max-file-size: 2000MB
+      max-request-size: 2000MB
+  ldap:
+    urls: ldap://192.168.5.235
+    base: DC=nancal,DC=com
+    username: CN=Administrator,CN=Users,DC=nancal,DC=com
+    password: Nancal.123
+
+mail:
+  sender: naniam2021@163.com
+  pwd: EYHJZJSODIXZPRNI
+  smtp: smtp.163.com
+  pop: pop.163.com
+captcha:
+  vip:
+    open: true
+
+#私有化是否开启
+openPrivatization: true

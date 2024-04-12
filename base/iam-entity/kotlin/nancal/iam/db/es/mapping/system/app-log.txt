@@ -1,0 +1,52 @@
+{
+  "properties" : {
+    "visitAt" : {
+      "type" : "date",
+      "format" : "strict_date_optional_time||yyyy-MM-dd HH:mm:ss||epoch_second"
+    },
+    "logFile" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "level" : {
+      "type" : "keyword"
+    },
+    "group" : {
+      "type" : "keyword"
+    },
+    "requestId" : {
+      "type" : "keyword"
+    },
+    "className" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "line" : {
+      "type" : "keyword"
+    },
+    "content" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "id" : {
+      "type" : "keyword"
+    },
+    "createAt" : {
+      "type" : "date",
+      "format" : "strict_date_optional_time||yyyy-MM-dd HH:mm:ss||epoch_second"
+    },
+    "updateAt" : {
+      "type" : "date",
+      "format" : "strict_date_optional_time||yyyy-MM-dd HH:mm:ss||epoch_second"
+    }
+  }
+}

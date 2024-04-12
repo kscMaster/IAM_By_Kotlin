@@ -1,0 +1,79 @@
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-redis
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-path
+  volumeMode: Filesystem
+  hostPath:
+    path: /data/k8s-store-pv/pv-redis
+    type: DirectoryOrCreate
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: pvc-redis
+  namespace: app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: local-path
+  volumeMode: Filesystem
+  volumeName: pv-redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dep-redis
+  namespace: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: dep-redis
+  template:
+    metadata:
+      labels:
+        name: dep-redis
+    spec:
+      containers:
+        - name: redis
+          image: redis
+          command: [ "redis-server" , "--requirepass" , "1@#4" ]
+          volumeMounts:
+            - mountPath: "/data"
+              name: pvc-redis
+          resources:
+            limits:
+              cpu: 1
+              memory: 256Mi
+
+      volumes:
+        - name: pvc-redis
+          persistentVolumeClaim:
+            claimName: pvc-redis
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-redis
+  namespace: app
+spec:
+  selector:
+    name: dep-redis
+  type: NodePort
+  ports:
+    - port: 6379
+      targetPort: 6379
+      nodePort: 31379

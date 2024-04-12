@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>mp-cloud-k8s</artifactId>
+    <packaging>pom</packaging>
+    <name>mp-cloud-k8s</name>
+
+    <parent>
+        <groupId>cn.nancal</groupId>
+        <artifactId>mp-cloud</artifactId>
+        <version>1.0.1</version>
+        <relativePath>./pom_cloud.xml</relativePath>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-kubernetes-fabric8-all</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+    </dependencies>
+</project>

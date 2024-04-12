@@ -1,0 +1,115 @@
+pipeline {
+    agent any
+    environment {
+        folder = "@folder@"
+    }
+    stages {
+        stage('获取代码') {
+            steps {
+                sh '''#!/usr/bin/env bash
+                echo -e "generate at @date@ by @auth@ \ngit:@git_url@ @git_branch@ @folder@\n.env.@nacos_ns@"
+                sudo chmod a+rw ./ -R
+                '''
+                deleteDir()
+                git branch: '@git_branch@', credentialsId: '@git_credential_id@', url: '@git_url@'
+            }
+        }
+        stage('编译') {
+            steps {
+                sh '''#!/usr/bin/env bash
+                pod_id=$(date "+%Y%m%d.%H%M%S")
+                echo $pod_id > .pod_id.txt
+                cd @folder@
+
+                if [ -f pre_build.sh ]; then
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/pre_build.sh"
+                    echo "===================================="
+                    bash pre_build.sh @nacos_ns@
+                fi
+
+                if [ -f build.sh ]; then
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/build.sh"
+                    echo "===================================="
+                    bash build.sh @nacos_ns@
+                fi
+
+                if [ -f post_build.sh ]; then
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/post_build.sh"
+                    echo "===================================="
+                    bash post_build.sh @nacos_ns@
+                fi
+                '''
+            }
+        }
+        stage('生成镜像') {
+            steps {
+                sh'''#!/usr/bin/env bash
+                read pod_id < .pod_id.txt
+                cd @folder@
+                if [ ! -f Dockerfile ]; then
+                    wget http://saas-demo.nancal.com:8200/app/python.Dockerfile -O Dockerfile
+                else
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/Dockerfile"
+                    echo "===================================="
+                fi
+
+                if [ ! -f @folder@/.env ]; then
+                    error '找不到 @folder@/.env'
+                fi
+
+                # 读取 env.sh docker_name
+
+                . env.sh
+                docker_name=$(echo $docker_name | sed 's/\\W/-/g' |  sed 's/_/-/g')
+
+                echo "===================================="
+                echo "使用 @folder@/env.sh docker_name = $docker_name 做为 docker image_name 以及 k8s svc-name"
+                echo "===================================="
+                sudo docker build -t saas-dev.nancal.com:7002/python/$docker_name:$pod_id .
+                '''
+            }
+        }
+        stage('上传镜像') {
+            steps {
+                sh'''#!/usr/bin/env bash
+                read pod_id < .pod_id.txt
+                . env.sh
+                docker_name=$(echo $docker_name | sed 's/\\W/-/g' |  sed 's/_/-/g')
+
+                sudo docker push "saas-dev.nancal.com:7002/python/$docker_name:$pod_id"
+                '''
+            }
+        }
+        stage('K8s部署') {
+            steps {
+                sh '''#!/usr/bin/env bash
+                . /etc/profile
+                read pod_id < .pod_id.txt
+                cd @folder@
+
+                if [ ! -f app.yml ]; then
+                    wget http://saas-demo.nancal.com:8200/app/python-default.yml -O app.yml
+                else
+                    echo "===================================="
+                    echo "     重要消息:项目存在 @folder@/app.yml"
+                    echo "===================================="
+                fi
+
+                . env.sh
+                docker_name=$(echo $docker_name | sed 's/\\W/-/g' |  sed 's/_/-/g')
+
+                sed -i "s|@name|$docker_name|g" app.yml
+                sed -i "s|@version|$pod_id|g" @folder@/app.yml
+                sed -i "s|@image|saas-dev.nancal.com:7002/python/$docker_name:$pod_id|g" app.yml
+                kubectl apply -f app.yml -n @k8s_ns@
+
+                echo "部署 $docker_name 完成"
+                '''
+            }
+        }
+    }
+}

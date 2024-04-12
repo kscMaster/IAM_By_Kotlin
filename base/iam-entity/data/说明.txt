@@ -1,0 +1,6 @@
+导出
+    mongoexport -h 127.0.0.1 --port 27017 -d nbcp -u 用户名 -p 密码 --collection test1  -o City.json
+
+
+导入
+    mongoimport -h 127.0.0.1 --port 27017 -d nbcp --collection test1  --file City.json

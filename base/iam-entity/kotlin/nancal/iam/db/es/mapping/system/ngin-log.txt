@@ -1,0 +1,49 @@
+{
+  "properties" : {
+    "ip" : {
+      "type" : "keyword"
+    },
+    "visitAt" : {
+      "type" : "date",
+      "format" : "strict_date_optional_time||yyyy-MM-dd HH:mm:ss||epoch_second"
+    },
+    "method" : {
+      "type" : "keyword"
+    },
+    "url" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "referer" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "status" : {
+      "type" : "integer"
+    },
+    "agent" : {
+      "type" : "text",
+      "index" : "true",
+      "boost" : "1",
+      "analyzer" : "ik_max_word",
+      "search_analyzer" : "ik_max_word"
+    },
+    "id" : {
+      "type" : "keyword"
+    },
+    "createAt" : {
+      "type" : "date",
+      "format" : "strict_date_optional_time||yyyy-MM-dd HH:mm:ss||epoch_second"
+    },
+    "updateAt" : {
+      "type" : "date",
+      "format" : "strict_date_optional_time||yyyy-MM-dd HH:mm:ss||epoch_second"
+    }
+  }
+}

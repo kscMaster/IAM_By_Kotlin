@@ -1,0 +1,134 @@
+{
+  "properties" : {
+    "id" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      }
+    },
+    "module" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      }
+    },
+    "data" : {
+      "properties" : {
+        "action" : {
+          "type" : "keyword"
+        },
+        "resource" : {
+          "type" : "keyword"
+        },
+        "remark" : {
+          "type" : "keyword"
+        },
+        "result" : {
+          "type" : "keyword"
+        },
+        "ip" : {
+          "type" : "keyword"
+        },
+        "os" : {
+          "type" : "keyword"
+        },
+        "browser" : {
+          "type" : "keyword"
+        },
+        "city" : {
+          "type" : "keyword"
+        },
+        "tenant" : {
+          "properties" : {
+            "id" : {
+              "type" : "keyword"
+            },
+            "name" : {
+              "type" : "keyword"
+            }
+          }
+        },
+        "appInfo" : {
+          "properties" : {
+            "code" : {
+              "type" : "keyword"
+            },
+            "name" : {
+              "type" : "keyword"
+            }
+          }
+        },
+        "roles" : {
+          "properties" : {
+            "id" : {
+              "type" : "keyword"
+            },
+            "name" : {
+              "type" : "keyword"
+            }
+          }
+        }
+      }
+    },
+    "msg" : {
+      "type" : "text",
+      "fields" : {
+        "keyword" : {
+          "type" : "keyword",
+          "ignore_above" : 256
+        }
+      }
+    },
+    "request" : {
+      "properties" : {
+        "url" : {
+          "type" : "keyword"
+        },
+        "method" : {
+          "type" : "keyword"
+        },
+        "body" : {
+          "type" : "keyword"
+        },
+        "header" : {
+          "type" : "keyword"
+        }
+      }
+    },
+    "response" : {
+      "properties" : {
+        "status" : {
+          "type" : "keyword"
+        },
+        "body" : {
+          "type" : "keyword"
+        },
+        "header" : {
+          "type" : "keyword"
+        }
+      }
+    },
+    "creator" : {
+      "properties" : {
+        "id" : {
+          "type" : "keyword"
+        },
+        "name" : {
+          "type" : "keyword"
+        }
+      }
+    },
+    "createAt" : {
+      "type" : "date"
+    },
+    "status" : {
+      "type" : "integer"
+    }
+  }
+}

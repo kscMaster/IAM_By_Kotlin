@@ -1,0 +1,2 @@
+{"tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"appCode":"","code":"type","name":"类型","fieldType":"Text","remark":"","dataSource":"","isDeleted":false,"id":"62b2cafe71fec83d9a25993a"}
+{"tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"appCode":"","code":"name","name":"名称","fieldType":"Textarea","remark":"","dataSource":"","isDeleted":false,"id":"62b2cae271fec83d9a259939"}

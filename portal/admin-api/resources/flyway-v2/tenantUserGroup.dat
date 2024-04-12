@@ -1,0 +1,4 @@
+{"tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"name":"项目主管","remark":"","enabled":false,"allowApps":[],"denyApps":[],"roles":[],"isDeleted":false,"id":"62ce9e0cdd41866e4f8c59a6"}
+{"tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"name":"计划员","remark":"","enabled":false,"allowApps":[],"denyApps":[],"roles":[],"isDeleted":false,"id":"62ce90a1dd41866e4f8c5987"}
+{"tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"name":"主管工艺","remark":"勿动！","enabled":false,"allowApps":[],"denyApps":[],"roles":[],"isDeleted":false,"id":"627b7b58b33c0f354bafc2c8"}
+{"tenant":{"id":"6279f16a9b1e3a0f6df71503","name":"初始化数据（私有化部署包）勿删勿改"},"name":"技能负责人","remark":"勿动！","enabled":false,"allowApps":[],"denyApps":[],"roles":[],"isDeleted":false,"id":"627b7a4cb33c0f354bafc2c7"}

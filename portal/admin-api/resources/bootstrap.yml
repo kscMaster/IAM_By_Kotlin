@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: mp-iam-admin-api
+  messages:
+    encoding: UTF-8
+  profiles:
+    active: local
+  cloud:
+    config:
+      enabled: false # 关闭默认的配置中心，使用 Nacos配置中心，否则会报警告，请求 http://localhost:8888
+    #      allow-override: true
+    #      override-none: true
+    #      override-system-properties: false
+
+  main:
+    allow-circular-references: true
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 10000
+
+app:
+  product-line:
+    code: mp
+    redis-prefix-enable: true
+

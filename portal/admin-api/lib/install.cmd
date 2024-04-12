@@ -1,0 +1,1 @@
+mvn install:install-file -Dfile=aspose-words-19.5.0.jar -DgroupId=cn.dev8 -DartifactId=aspose -Dversion=19.5.0 -Dpackaging=jar
